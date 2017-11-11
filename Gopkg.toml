@@ -7,5 +7,9 @@
     version = "v1.3.0"
 
 [[constraint]]
+    name = "github.com/golang/glog"
+    branch = "master"
+
+[[constraint]]
     name = "github.com/samuel/go-zookeeper"
     revision = "9a96098268ef555eb1f04d8b1ee813d0a87e5089"
