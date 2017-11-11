@@ -70,6 +70,7 @@ func (h Handler) HandleZk(w http.ResponseWriter, r *http.Request) (code int, res
 		return
 	}
 
+	code = http.StatusOK
 	cmd := info["cmd"].(string)
 	cmd = strings.Replace(strings.ToLower(cmd), "-", "_", -1)
 	switch cmd {
@@ -162,6 +163,7 @@ func (h Handler) Create(info map[string]interface{}) (code int, resp []byte, err
 func (h Handler) Delete(info map[string]interface{}) (code int, resp []byte, err error) {
 	path := h.Path(info["path"].(string))
 	version := int32(info["version"].(float64))
+	code = http.StatusOK
 	if err = h.zk.Delete(path, version); err == zk.ErrNoNode {
 		code = http.StatusNotFound
 	} else if err == zk.ErrBadVersion {
