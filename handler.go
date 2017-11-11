@@ -20,7 +20,7 @@ type Handler struct {
 // NewHandler returns a new Handler.
 func NewHandler(prefix string, zkClient ZkClient) Handler {
 	return Handler{
-		prefix: prefix,
+		prefix: strings.TrimRight(prefix, "/"),
 		zk:     zkClient,
 		acl:    []zk.ACL{zk.ACL{Perms: 0x1f, Scheme: "world", ID: "anyone"}},
 	}
@@ -31,7 +31,10 @@ func (h Handler) Path(path string) string {
 	if h.prefix == "" {
 		return path
 	}
-	return h.prefix + path
+	if path[0] == '/' {
+		return h.prefix + path
+	}
+	return fmt.Sprintf("%s/%s", h.prefix, path)
 }
 
 func (h Handler) toJSON(m map[string]interface{}, s *zk.Stat) map[string]interface{} {
@@ -70,25 +73,25 @@ func (h Handler) HandleZk(w http.ResponseWriter, r *http.Request) (code int, res
 	cmd := info["cmd"].(string)
 	cmd = strings.Replace(strings.ToLower(cmd), "-", "_", -1)
 	switch cmd {
-	case "add_auth":
-		err = h.AddAuth(info)
+	case "add_auth_info":
+		err = h.AddAuthInfo(info)
 	case "create":
 		return h.Create(info)
 	case "delete":
 		return h.Delete(info)
-	case "exist":
-		resp, err = h.Exist(info)
-	case "children":
+	case "exists":
+		resp, err = h.Exists(info)
+	case "get_children":
 		return h.GetChildren(info)
-	case "get":
-		return h.Get(info)
-	case "set":
-		return h.Set(info)
+	case "get_data":
+		return h.GetData(info)
+	case "set_data":
+		return h.SetData(info)
 	case "get_acl":
 		return h.GetACL(info)
 	case "set_acl":
 		return h.SetACL(info)
-	// case "existw", "childrenw", "getw", "multi":
+	// case "exists_watch", "get_children_watch", "get_data_watch", "multi":
 	default:
 		code = http.StatusNotImplemented
 		err = fmt.Errorf("The cmd %s is not implemented", cmd)
@@ -97,8 +100,8 @@ func (h Handler) HandleZk(w http.ResponseWriter, r *http.Request) (code int, res
 	return
 }
 
-// AddAuth adds the auth into the ZK cluster.
-func (h Handler) AddAuth(info map[string]interface{}) (err error) {
+// AddAuthInfo adds the auth into the ZK cluster.
+func (h Handler) AddAuthInfo(info map[string]interface{}) (err error) {
 	return h.zk.AddAuth(info["scheme"].(string), []byte(info["auth"].(string)))
 }
 
@@ -167,8 +170,8 @@ func (h Handler) Delete(info map[string]interface{}) (code int, resp []byte, err
 	return
 }
 
-// Exist returns true if the path exists, or false if not.
-func (h Handler) Exist(info map[string]interface{}) (resp []byte, err error) {
+// Exists returns true if the path exists, or false if not.
+func (h Handler) Exists(info map[string]interface{}) (resp []byte, err error) {
 	yes, s, err := h.zk.Exists(h.Path(info["path"].(string)))
 	if err == nil {
 		if yes {
@@ -191,8 +194,8 @@ func (h Handler) GetChildren(info map[string]interface{}) (code int, resp []byte
 	return
 }
 
-// Get returns the data information of the path.
-func (h Handler) Get(info map[string]interface{}) (code int, resp []byte, err error) {
+// GetData returns the data information of the path.
+func (h Handler) GetData(info map[string]interface{}) (code int, resp []byte, err error) {
 	data, s, err := h.zk.Get(h.Path(info["path"].(string)))
 	if err == nil && s != nil {
 		resp, err = json.Marshal(h.toJSON(map[string]interface{}{"data": string(data)}, s))
@@ -202,8 +205,8 @@ func (h Handler) Get(info map[string]interface{}) (code int, resp []byte, err er
 	return
 }
 
-// Set sets the data information of the path.
-func (h Handler) Set(info map[string]interface{}) (code int, resp []byte, err error) {
+// SetData sets the data information of the path.
+func (h Handler) SetData(info map[string]interface{}) (code int, resp []byte, err error) {
 	path := h.Path(info["path"].(string))
 	data := info["data"].(string)
 	version := int32(info["version"].(float64))
