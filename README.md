@@ -262,7 +262,7 @@ The format of each element of the array `acl` is JSON:
 
 | Field |  Type  | Required | Value
 |-------|--------|----------|----------
-| cmd   | string | Y        | `get_acl`
+| cmd   | string | Y        | `delete`
 | path  | string | Y        |
 | version | int  | Y        |
 
