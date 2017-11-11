@@ -16,6 +16,8 @@ var (
 
 var globalOpts = []config.Opt{
 	config.Str("addr", ":8000", "The address that the HTTP server listens to."),
+	config.Str("certfile", "", "The path of the SSL/TLS cert file."),
+	config.Str("keyfile", "", "The path of the SSL/TLS key file."),
 }
 
 var zkOpts = []config.Opt{
@@ -53,5 +55,13 @@ func main() {
 	http.HandleFunc("/zk", https.HandlerWrapper(handler.HandleZk))
 
 	// Start the HTTP server.
-	glog.Exit(http.ListenAndServe(conf.String("addr"), nil))
+	addr := conf.String("addr")
+	certFile := conf.String("certfile")
+	keyFile := conf.String("keyfile")
+	if certFile == "" || keyFile == "" {
+		glog.Exit(http.ListenAndServe(addr, nil))
+	} else {
+		glog.Exit(http.ListenAndServeTLS(addr, certFile, keyFile, nil))
+	}
+
 }
