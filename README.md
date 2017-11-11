@@ -9,8 +9,8 @@ $ dep ensure && go install github.com/xgfone/zkproxy
 ```
 
 Notice:
-1. The package manager is [dep](https://github.com/golang/dep), which is added into the go tool chain in future.
-2. The go version should be 1.7+, but 1.9 is tested.
+1. The package manager is [dep](https://github.com/golang/dep), which will be added into the go tool chain in future.
+2. The go version should be 1.7+.
 
 ## Example
 ```bash
@@ -40,10 +40,11 @@ The request body is JSON, which must contain the field `cmd`.
 - 500: The server error or other errors.
 - 501: The CMD is not implementation.
 
-Notice: If the status code is not 200, the body is an error string.
+**Notice:** If the status code is not 200, the body is an error string.
 
 #### 1. AddAuthInfo
 **Request Body**
+
 |  Field  |  Type  | Required | Value
 |---------|--------|----------|----------------
 | cmd     | string | Y        | `add_auth_info`
@@ -51,10 +52,12 @@ Notice: If the status code is not 200, the body is an error string.
 | auth    | string | Y        |
 
 **Response Body**
+
 None.
 
 #### 2. Create
 **Request Body**
+
 |    Field   |  Type  | Required | Value
 |------------|--------|----------|---------
 | cmd        | string | Y        | `create`
@@ -73,18 +76,21 @@ The format of each element of the array `acl` is JSON:
 | perms  | int    | Y
 
 **Response Body**
+
 | Field | Type
 |-------|--------
 | path  | string
 
 #### 3. Exists
 **Request Body**
+
 | Field |  Type  | Required | Value
 |-------|--------|----------|----------
 | cmd   | string | Y        | `exists`
 | path  | string | Y        |
 
 **Response Body**
+
 If the path exists, the JSON is
 
 | Field | Type | Value
@@ -110,12 +116,14 @@ If the path does not exist, the JSON is
 
 #### 4. GetChildren
 **Request Body**
+
 | Field |  Type  | Required | Value
 |-------|--------|----------|---------
 | cmd   | string | Y        | `get_children`
 | path  | string | Y        |
 
 **Response Body**
+
 | Field | Type
 |-------|------
 | children | array\<string>
@@ -133,12 +141,14 @@ If the path does not exist, the JSON is
 
 #### 5. GetData
 **Request Body**
+
 | Field |  Type  | Required | Value
 |-------|--------|----------|---------
 | cmd   | string | Y        | `get_data`
 | path  | string | Y        |
 
 **Response Body**
+
 | Field | Type
 |-------|------
 | data | string
@@ -156,6 +166,7 @@ If the path does not exist, the JSON is
 
 #### 6. SetData
 **Request Body**
+
 | Field |  Type  | Required | Value
 |-------|--------|--------- |----------
 | cmd   | string | Y        | `set_data`
@@ -164,6 +175,7 @@ If the path does not exist, the JSON is
 | version | int  | Y        |
 
 **Response Body**
+
 | Field | Type
 |-------|------
 | czxid | int
@@ -180,12 +192,14 @@ If the path does not exist, the JSON is
 
 #### 7. GetACL
 **Request Body**
+
 | Field |  Type  | Required | Value
 |-------|--------|----------|----------
 | cmd   | string | Y        | `get_acl`
 | path  | string | Y        |
 
 **Response Body**
+
 | Feild | Type
 |-------|------
 | acl   | array
@@ -211,6 +225,7 @@ The format of each element of the array `acl` is JSON:
 
 #### 8. SetACL
 **Request Body**
+
 | Field |  Type  | Required | Value
 |-------|--------|--------- |----------
 | cmd   | string | Y        | `set_acl`
@@ -227,6 +242,7 @@ The format of each element of the array `acl` is JSON:
 | perms  | int    | Y
 
 **Response Body**
+
 | Field | Type
 |-------|------
 | czxid | int
@@ -243,6 +259,7 @@ The format of each element of the array `acl` is JSON:
 
 #### 9. Delete
 **Request Body**
+
 | Field |  Type  | Required | Value
 |-------|--------|----------|----------
 | cmd   | string | Y        | `get_acl`
