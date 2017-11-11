@@ -267,6 +267,7 @@ The format of each element of the array `acl` is JSON:
 | version | int  | Y        |
 
 **Response Body**
+
 None.
 
 **Notice:** The watch api of `Exists`, `GetData`, `GetChildren`, and `Multi` are not implemented.
