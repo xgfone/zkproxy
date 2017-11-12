@@ -14,7 +14,7 @@ Notice:
 
 ## Example
 ```bash
-$ curl http://127.0.0.1/zk -X POST -H "application/json" -d '{"cmd":"create", "path":"/test", "data":"test"}'
+$ curl http://127.0.0.1/zk -X POST -d '{"cmd":"create", "path":"/test", "data":"test"} -H "Content-Type: application/json"'
 ```
 Output:
 ```json
