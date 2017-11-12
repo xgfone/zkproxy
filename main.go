@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
+	"runtime"
 	"syscall"
 
 	"github.com/golang/glog"
@@ -11,13 +13,15 @@ import (
 )
 
 var (
-	conf = config.Conf
+	conf    = config.Conf
+	version = "1.1.0"
 )
 
 var globalOpts = []config.Opt{
 	config.Str("addr", ":8000", "The address that the HTTP server listens to."),
 	config.Str("certfile", "", "The path of the SSL/TLS cert file."),
 	config.Str("keyfile", "", "The path of the SSL/TLS key file."),
+	config.Bool("version", false, "Print the version and exit."),
 }
 
 var zkOpts = []config.Opt{
@@ -38,6 +42,12 @@ func init() {
 func main() {
 	if err := conf.Parse(nil); err != nil {
 		glog.Exit(err)
+	}
+
+	if conf.Bool("version") {
+		fmt.Printf("Go Build Version: %s\n", runtime.Version())
+		fmt.Printf("Version: %s\n", version)
+		return
 	}
 
 	// Handle the signals.
