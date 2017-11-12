@@ -78,6 +78,8 @@ The format of each element of the array `acl` is JSON:
 | scheme | string | Y
 | perms  | int    | Y
 
+**Notice:** `ephemeral` is allowed to assign, but you should not use it, the lifecycle of which is associated with the session between the ZK client and server, that's this proxy and the ZK cluster. When using it, you should understand and consider whether it is what you need.
+
 **Response Body**
 
 | Field | Type
