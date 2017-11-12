@@ -1,5 +1,5 @@
 # zkproxy
-a HTTP+JSON proxy of ZooKeeper.
+A ZooKeeper proxy based on HTTP+JSON.
 
 ## Install
 ```bash
