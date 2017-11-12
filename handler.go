@@ -31,6 +31,9 @@ func (h Handler) Path(path string) string {
 	if h.prefix == "" {
 		return path
 	}
+	if path == "/" {
+		return h.prefix
+	}
 	if path[0] == '/' {
 		return h.prefix + path
 	}
