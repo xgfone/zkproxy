@@ -1,16 +1,19 @@
 # zkproxy
 A ZooKeeper proxy based on HTTP+JSON.
 
-## Install
+## Install & Start
 ```bash
 $ go get github.com/xgfone/zkproxy
 $ cd $GOPATH/src/github.com/xgfone/zkproxy
 $ dep ensure && go install github.com/xgfone/zkproxy
+$ zkproxy -zk_addrs 192.168.1.1:2181,192.168.1.2:2181,192.168.1.3:2181
 ```
 
 Notice:
 1. The package manager is [dep](https://github.com/golang/dep), which will be added into the go tool chain in future.
 2. The go version should be 1.7+.
+3. The log uses [glog](https://github.com/golang/glog), so the arguments about log are given by `CLI`, and others support `CLI` and the `ini` configuration file.
+4. You can see the usage by `zkproxy -h`.
 
 ## Example
 ```bash
