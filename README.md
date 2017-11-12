@@ -45,6 +45,8 @@ The request body is JSON, which must contain the field `cmd`.
 
 **Notice:** If the status code is not 200, the body is an error string.
 
+For the request and response body, except `cmd`, `exist`, `data`, `children`, the name and meaning of the other arguments are same as the java implementation of ZK. Please refer to the Java Doc.
+
 #### 1. AddAuthInfo
 **Request Body**
 
