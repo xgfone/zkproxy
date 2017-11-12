@@ -59,9 +59,8 @@ func main() {
 	certFile := conf.String("certfile")
 	keyFile := conf.String("keyfile")
 	if certFile == "" || keyFile == "" {
-		glog.Exit(http.ListenAndServe(addr, nil))
+		https.ListenAndServe(addr, nil)
 	} else {
-		glog.Exit(http.ListenAndServeTLS(addr, certFile, keyFile, nil))
+		https.ListenAndServeTLS(addr, certFile, keyFile, nil)
 	}
-
 }
