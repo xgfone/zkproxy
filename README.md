@@ -6,7 +6,7 @@ A ZooKeeper proxy based on HTTP+JSON.
 $ go get github.com/xgfone/zkproxy
 $ cd $GOPATH/src/github.com/xgfone/zkproxy
 $ dep ensure
-$ go build -ldflags "-X main.reversion=`git rev-parse HEAD` -X main.version=`git tag -l | tail -n 1`" github.com/xgfone/zkproxy
+$ go build -ldflags "-X main.reversion=`git rev-parse HEAD` -X main.version=`git tag -l | tail -n 1`" .
 $ ./zkproxy -zk_addrs 192.168.1.1:2181,192.168.1.2:2181,192.168.1.3:2181
 ```
 
