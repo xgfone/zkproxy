@@ -5,8 +5,9 @@ A ZooKeeper proxy based on HTTP+JSON.
 ```bash
 $ go get github.com/xgfone/zkproxy
 $ cd $GOPATH/src/github.com/xgfone/zkproxy
-$ dep ensure && go install github.com/xgfone/zkproxy
-$ zkproxy -zk_addrs 192.168.1.1:2181,192.168.1.2:2181,192.168.1.3:2181
+$ dep ensure
+$ go build -ldflags "-X main.reversion=`git rev-parse HEAD` -X main.version=`git tag -l | tail -n 1`" github.com/xgfone/zkproxy
+$ ./zkproxy -zk_addrs 192.168.1.1:2181,192.168.1.2:2181,192.168.1.3:2181
 ```
 
 Notice:
@@ -14,6 +15,7 @@ Notice:
 2. The go version should be 1.7+.
 3. The log uses [glog](https://github.com/golang/glog), so the arguments about log are given by `CLI`, and others support `CLI` and the `ini` configuration file. For the `ini` configuration file, you can assign it by the CLI option `-config-file`.
 4. You can see the usage by `zkproxy -h`.
+5. You can use the script `build.sh` to build the binary executable program.
 
 ## Example
 ```bash

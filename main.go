@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"runtime"
 	"syscall"
+	"time"
 
 	"github.com/golang/glog"
 	"github.com/xgfone/go-config"
@@ -13,8 +14,10 @@ import (
 )
 
 var (
-	conf    = config.Conf
-	version = "1.1.0"
+	conf      = config.Conf
+	version   = "Unknown"
+	reversion = "Unknown"
+	datetime  = time.Now().Format(time.RFC3339)
 )
 
 var globalOpts = []config.Opt{
@@ -45,8 +48,10 @@ func main() {
 	}
 
 	if conf.Bool("version") {
-		fmt.Printf("Go Build Version: %s\n", runtime.Version())
 		fmt.Printf("Version: %s\n", version)
+		fmt.Printf("Build Date: %s\n", datetime)
+		fmt.Printf("Build Git Reversion: %s\n", reversion)
+		fmt.Printf("Build Go Version: %s\n", runtime.Version())
 		return
 	}
 
