@@ -1,10 +1,10 @@
 [[constraint]]
     name = "github.com/xgfone/go-config"
-    version = "v2.0.0"
+    version = "v3.0.0"
 
 [[constraint]]
     name = "github.com/xgfone/go-tools"
-    version = "v1.3.0"
+    version = "v2.0.0"
 
 [[constraint]]
     name = "github.com/golang/glog"

@@ -9,7 +9,8 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/xgfone/go-config"
-	"github.com/xgfone/go-tools/nets/https"
+	"github.com/xgfone/go-tools/log2"
+	"github.com/xgfone/go-tools/net2/http2"
 	"github.com/xgfone/go-tools/signal2"
 )
 
@@ -36,7 +37,7 @@ var zkOpts = []config.Opt{
 
 func init() {
 	glog.MaxSize = 1024 * 1024 * 1024
-	https.ErrorLogFunc = glog.Errorf
+	log2.ErrorF = glog.Errorf
 
 	conf.RegisterCliOpts("", globalOpts)
 	conf.RegisterCliOpts("zk", zkOpts)
@@ -67,15 +68,15 @@ func main() {
 
 	// Create a HTTP handler and set the router.
 	handler := NewHandler(zkOpts.String("prefix"), zk)
-	http.HandleFunc("/zk", https.HandlerWrapper(handler.HandleZk))
+	http.HandleFunc("/zk", http2.HandlerWrapper(handler.HandleZk))
 
 	// Start the HTTP server.
 	addr := conf.String("addr")
 	certFile := conf.String("certfile")
 	keyFile := conf.String("keyfile")
 	if certFile == "" || keyFile == "" {
-		https.ListenAndServe(addr, nil)
+		http2.ListenAndServe(addr, nil)
 	} else {
-		https.ListenAndServeTLS(addr, certFile, keyFile, nil)
+		http2.ListenAndServeTLS(addr, certFile, keyFile, nil)
 	}
 }

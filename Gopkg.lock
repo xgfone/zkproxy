@@ -15,18 +15,18 @@
 [[projects]]
   name = "github.com/xgfone/go-config"
   packages = ["."]
-  revision = "be599f2a1bebae55d4b7fb2e8306598c351e1e31"
-  version = "v2.0.0"
+  revision = "b6d384f408aa04c6ec4fa7c98ca1a70ba1c52ecd"
+  version = "v3.0.0"
 
 [[projects]]
   name = "github.com/xgfone/go-tools"
-  packages = ["lifecycle","nets/https","signal2"]
-  revision = "962381700682eb4742efdf613e41fba2f11b2c0b"
-  version = "v1.3.0"
+  packages = ["lifecycle","log2","net2/http2","signal2"]
+  revision = "988aedc0f1c4f277be459ec0fea07e47bf751bc1"
+  version = "v2.0.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "36dc20b2a0f86bf9890cc67eefccdee7c46d7055c4dde79e28655eb5bf7494b2"
+  inputs-digest = "5618f3e142b48ef314f82ab90792fc056c36fe7196f181c553509eb58ce03847"
   solver-name = "gps-cdcl"
   solver-version = 1

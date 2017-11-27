@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/samuel/go-zookeeper/zk"
-	"github.com/xgfone/go-tools/nets/https"
+	"github.com/xgfone/go-tools/net2/http2"
 )
 
 // Handler is a HTTP handler.
@@ -68,7 +68,7 @@ func (h Handler) HandleZk(w http.ResponseWriter, r *http.Request) (code int, res
 	}()
 
 	info := make(map[string]interface{})
-	if err = https.DecodeJSON(r, 1024*1024, &info); err != nil {
+	if err = http2.DecodeJSON(r, 1024*1024, &info); err != nil {
 		code = http.StatusBadRequest
 		return
 	}
