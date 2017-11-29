@@ -28,3 +28,6 @@ vendor/
 # Intellij IDE
 .idea/
 *.iml
+
+# VS Code
+.vscode/
